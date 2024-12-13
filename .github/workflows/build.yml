@@ -45,7 +45,11 @@ jobs:
 
       - name: find and rename artifact
         run: |
-          ARTIFACT_NAME=$(ls build/libs/dwrcl-*.jar)
+          ARTIFACT_NAME=$(find build/libs -name "dwrcl-${{ env.MOD_VERSION }}.jar")
+          if [ -z "$ARTIFACT_NAME" ]; then
+            echo "No matching artifact found!"
+            exit 1
+          fi
           RENAMED_ARTIFACT="dwrcl-${{ env.MOD_VERSION }}_${{ env.MINECRAFT_VERSION }}-fabric.jar"
           mv "$ARTIFACT_NAME" "build/libs/$RENAMED_ARTIFACT"
 
