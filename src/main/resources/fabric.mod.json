@@ -3,7 +3,7 @@
 	"id": "dwrcl",
 	"version": "${version}",
 	"name": "DWR Coordinate Library",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "DWR Coordinate Library",
 	"authors": [
 		"separatehhh23"
 	],

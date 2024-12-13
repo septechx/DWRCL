@@ -24,7 +24,6 @@ loom {
 	mods {
 		"dwrcl" {
 			sourceSet sourceSets.main
-			sourceSet sourceSets.client
 		}
 	}
 
@@ -67,6 +66,8 @@ jar {
 	from("LICENSE") {
 		rename { "${it}_${project.base.archivesName.get()}"}
 	}
+
+	archiveFileName = "${archives_base_name}-${mod_version}_${minecraft_version}-fabric"
 }
 
 // configure the maven publication
