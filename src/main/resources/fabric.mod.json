@@ -5,29 +5,23 @@
 	"name": "DWR Coordinate Library",
 	"description": "This is an example description! Tell everyone what your mod is about!",
 	"authors": [
-		"Me!"
+		"separatehhh23"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://siesque.com/",
+		"sources": "https://github.com/Separatehhh23/DWRCL",
+		"issues": "https://github.com/Separatehhh23/DWRCL/issues"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/dwrcl/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
 			"com.siesque.dwrcl.DWRCoordinateLibrary"
-		],
-		"client": [
-			"com.siesque.dwrcl.DWRCoordinateLibraryClient"
 		]
 	},
 	"mixins": [
-		"dwrcl.mixins.json",
-		{
-			"config": "dwrcl.client.mixins.json",
-			"environment": "client"
-		}
+		"dwrcl.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.16.9",
@@ -35,7 +29,5 @@
 		"java": ">=21",
 		"fabric-api": "*"
 	},
-	"suggests": {
-		"another-mod": "*"
-	}
+	"suggests": {}
 }
