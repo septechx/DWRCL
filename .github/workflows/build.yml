@@ -28,12 +28,10 @@ jobs:
       - name: build
         run: ./gradlew build
 
-      - name: Find non-debug JAR file
+      - name: Find non-sources JAR file
         id: find_jar
         run: |
-          # Find the first .jar file that doesn't end in -debug.jar
-          JAR_FILE=$(find build/libs -name "*.jar" ! -name "*-debug.jar" | head -n 1)
-          echo "Found JAR file: $JAR_FILE"
+          JAR_FILE=$(find build/libs -name "*.jar" ! -name "*-sources.jar" | head -n 1)
           echo "JAR_FILE=$JAR_FILE" >> $GITHUB_ENV
 
       - name: Upload JAR file as artifact
@@ -41,22 +39,3 @@ jobs:
         with:
           name: Mod
           path: ${{ env.JAR_FILE }}
-
-      - name: Get version from gradle.properties
-        id: get_version
-        run: |
-          VERSION=$(grep '^mod_version=' gradle.properties | cut -d '=' -f 2)
-          echo "TAG_NAME=$VERSION" >> $GITHUB_ENV
-
-      - name: Create release
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ env.TAG_NAME }}
-          release_name: ${{ env.TAG_NAME }}
-          draft: false
-          prerelease: false
-
-      - name: Upload JAR file to release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: build/libs/*.jar
