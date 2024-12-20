@@ -8,26 +8,24 @@
 		"separatehhh23"
 	],
 	"contact": {
-		"homepage": "https://siesque.com/",
 		"sources": "https://github.com/Separatehhh23/DWRCL",
 		"issues": "https://github.com/Separatehhh23/DWRCL/issues"
 	},
 	"license": "MIT",
 	"icon": "assets/dwrcl/icon.png",
-	"environment": "*",
+	"environment": "server",
 	"entrypoints": {
-		"main": [
+		"server": [
 			"com.siesque.dwrcl.DWRCoordinateLibrary"
 		]
 	},
-	"mixins": [
-		"dwrcl.mixins.json"
-	],
 	"depends": {
 		"fabricloader": ">=0.16.9",
 		"minecraft": "~1.21.4",
 		"java": ">=21",
 		"fabric-api": "*"
 	},
-	"suggests": {}
+	"suggests": {
+		"dwrt": "*"
+	}
 }

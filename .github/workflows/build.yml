@@ -28,14 +28,8 @@ jobs:
       - name: build
         run: ./gradlew build
 
-      - name: Find non-sources JAR file
-        id: find_jar
-        run: |
-          JAR_FILE=$(find build/libs -name "*.jar" ! -name "*-sources.jar" | head -n 1)
-          echo "JAR_FILE=$JAR_FILE" >> $GITHUB_ENV
-
-      - name: Upload JAR file as artifact
+      - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: Mod
-          path: ${{ env.JAR_FILE }}
+          name: Artifacts
+          path: build/libs
