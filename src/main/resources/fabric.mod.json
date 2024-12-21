@@ -1,31 +1,30 @@
 {
-	"schemaVersion": 1,
-	"id": "dwrcl",
-	"version": "${version}",
-	"name": "DWR Coordinate Library",
-	"description": "DWR Coordinate Library",
-	"authors": [
-		"separatehhh23"
-	],
-	"contact": {
-		"sources": "https://github.com/Separatehhh23/DWRCL",
-		"issues": "https://github.com/Separatehhh23/DWRCL/issues"
-	},
-	"license": "MIT",
-	"icon": "assets/dwrcl/icon.png",
-	"environment": "server",
-	"entrypoints": {
-		"server": [
-			"com.siesque.dwrcl.DWRCoordinateLibrary"
-		]
-	},
-	"depends": {
-		"fabricloader": ">=0.16.9",
-		"minecraft": "~1.21.4",
-		"java": ">=21",
-		"fabric-api": "*"
-	},
-	"suggests": {
-		"dwrt": "*"
-	}
+  "schemaVersion": 1,
+  "id": "dwrcl",
+  "version": "${version}",
+  "name": "DWR Coordinate Library",
+  "description": "DWR Coordinate Library",
+  "authors": [
+    "separatehhh23"
+  ],
+  "contact": {
+    "sources": "https://github.com/Separatehhh23/DWRCL",
+    "issues": "https://github.com/Separatehhh23/DWRCL/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/dwrcl/icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "server": [
+      "com.siesque.dwrcl.DWRCoordinateLibrary"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  },
+  "suggests": {
+    "dwrt": "${dwrt_version}"
+  }
 }

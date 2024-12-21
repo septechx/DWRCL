@@ -2,7 +2,6 @@ package com.siesque.dwrcl.commands;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import net.minecraft.entity.Entity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
@@ -91,7 +90,7 @@ public class PrivateCoordinates {
             if (coordinates.isEmpty()) {
                 source.sendFeedback(() -> Text.literal("No coordinates found."), false);
             } else {
-                source.sendFeedback(() -> Text.literal("Your Coordinates:"), false);
+                source.sendFeedback(() -> Text.literal("Your coordinates:"), false);
                 for (String coordinate : coordinates) {
                     source.sendFeedback(() -> Text.literal(Utils.formatCoordinate(coordinate)), false);
                 }
@@ -99,6 +98,55 @@ public class PrivateCoordinates {
         } catch (IOException e) {
             LOGGER.error("Failed to list coordinates", e);
             source.sendFeedback(() -> Text.literal("An error occurred while listing coordinates."), false);
+            return 0;
+        }
+
+        return 1;
+    }
+
+    public int shareCoordinates(CommandContext<ServerCommandSource> context) {
+        String coordinateName = StringArgumentType.getString(context, "coordinate");
+        String player = StringArgumentType.getString(context, "player");
+        ServerCommandSource source = context.getSource();
+
+        if (source.getEntity() == null) {
+            source.sendFeedback(() -> Text.literal("This command must be run by an entity!"), false);
+            return 0;
+        }
+
+        String name = source.getEntity().getName().getString();
+
+        try {
+            List<String> coordinates = PrivateCoordinatesStorage.getCoordinatesForPlayer(name);
+            String coordinateToShare = null;
+
+            for (String coordinate : coordinates) {
+                String[] parts = coordinate.split(",");
+
+                if (parts[1].equals(coordinateName)) {
+                    coordinateToShare = coordinate;
+                }
+            }
+
+            if (coordinateToShare == null) {
+                source.sendFeedback(() -> Text.literal("Coordinate not found"), false);
+            } else {
+                String[] parts = coordinateToShare.split(",");
+                PrivateCoordinatesStorage.addCoordinate(
+                        player,
+                        coordinateName,
+                        parts[2],
+                        new BlockPos(
+                                Integer.parseInt(parts[3]),
+                                Integer.parseInt(parts[4]),
+                                Integer.parseInt(parts[5])
+                        )
+                );
+                source.sendFeedback(() -> Text.literal(String.format("Shared coordinate %s with %s", coordinateName, player)), false);
+            }
+        }  catch (IOException e) {
+            LOGGER.error("Failed to share coordinates", e);
+            source.sendFeedback(() -> Text.literal("An error occurred while sharing coordinates."), false);
             return 0;
         }
 
