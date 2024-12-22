@@ -25,6 +25,6 @@
     "minecraft": "${minecraft_version}"
   },
   "suggests": {
-    "dwrt": "${dwrt_version}"
+    "dwrt": ">=${dwrt_version}"
   }
 }
