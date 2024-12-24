@@ -36,7 +36,10 @@ public class DWRCoordinateLibrary implements DedicatedServerModInitializer {
 					.then(CommandManager.literal("share")
 							.then(CommandManager.argument("coordinate", StringArgumentType.string())
 									.then(CommandManager.argument("name", StringArgumentType.string())
-											.executes(privateCoordinates::shareCoordinates)))));
+											.executes(privateCoordinates::shareCoordinates))))
+					.then(CommandManager.literal("nether")
+							.then(CommandManager.argument("name", StringArgumentType.string())
+									.executes(privateCoordinates::netherizeCoorinates))));
 
 			if (hasDWRT) {
 				dispatcher.register(CommandManager.literal("dwrcl")

@@ -152,4 +152,53 @@ public class PrivateCoordinates {
 
         return 1;
     }
+
+    public int netherizeCoorinates(CommandContext<ServerCommandSource> context) {
+        String name = StringArgumentType.getString(context, "name");
+        ServerCommandSource source = context.getSource();
+
+        if (source.getEntity() == null) {
+            source.sendFeedback(() -> Text.literal("This command must be run by an entity!"), false);
+            return 0;
+        }
+
+        String player = source.getEntity().getName().getString();
+
+        try {
+            List<String> coordinates = PrivateCoordinatesStorage.getCoordinatesForPlayer(player);
+            String netherCoordinate = null;
+
+            for (String coordinate : coordinates) {
+                String[] parts = coordinate.split(",");
+
+                if (parts[1].equals(name)) {
+                    netherCoordinate = coordinate;
+                }
+            }
+
+            if (netherCoordinate == null) {
+                source.sendFeedback(() -> Text.literal("Coordinate not found"), false);
+            } else {
+                String[] parts = netherCoordinate.split(",");
+                BlockPos position = new BlockPos(
+                        Integer.parseInt(parts[3]) / 8,
+                        Integer.parseInt(parts[4]),
+                        Integer.parseInt(parts[5]) / 8
+                );
+                PrivateCoordinatesStorage.addCoordinate(
+                        player,
+                        name,
+                        "minecraft:nether",
+                        position
+                );
+                source.sendFeedback(() -> Text.literal(String.format("Created nether coordinates for %s at (Nether) %s", name, Utils.formatPosition(position))), false);
+            }
+        }  catch (IOException e) {
+            LOGGER.error("Failed to netherize coordinates", e);
+            source.sendFeedback(() -> Text.literal("An error occurred while netherizing coordinates."), false);
+            return 0;
+        }
+
+        return 1;
+    }
 }
