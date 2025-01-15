@@ -3,6 +3,8 @@ package com.siesque.dwrcl;
 import net.minecraft.util.math.BlockPos;
 
 public class Utils {
+    private static final String uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
     public static String formatPosition(BlockPos position) {
         return position.getX() + ", " + position.getY() + ", " + position.getZ();
     }
@@ -13,11 +15,12 @@ public class Utils {
     }
 
     public static String parseDimension(String dim) {
-        return capitalize(dim.split(":")[1]);
+        String processed = dim.equals("minecraft:the_nether") ? ":Nether" : dim;
+        return capitalize(processed.split(":")[1]);
     }
 
     public static String capitalize(String input) {
-        if (input == null || input.isEmpty()) {
+        if (input == null || input.isEmpty() || uppercaseLetters.contains(String.valueOf(input.charAt(0)))) {
             return input;
         }
         return input.substring(0, 1).toUpperCase() + input.substring(1);
